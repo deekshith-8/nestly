@@ -1,9 +1,8 @@
 export interface Skill {
   id: string;
   name: string;
-  category: string; // e.g., 'Frontend', 'Backend', 'Design', 'Other'
+  category: string;
 }
-
 export interface Experience {
   id: string;
   role: string;
@@ -11,7 +10,6 @@ export interface Experience {
   period: string;
   description: string;
 }
-
 export interface Project {
   id: string;
   title: string;
@@ -21,20 +19,41 @@ export interface Project {
   image?: string;
   featured?: boolean;
 }
-
 export interface Education {
   id: string;
   degree: string;
   school: string;
   period: string;
 }
-
-export interface CustomSectionItem {
+export interface Certification {
   id: string;
-  label: string;
-  value: string;
+  name: string;
+  issuer: string;
+  date: string;
+  url?: string;
 }
-
+export interface Language {
+  id: string;
+  name: string;
+  proficiency: string;
+}
+export interface Volunteer {
+  id: string;
+  role: string;
+  organization: string;
+  period: string;
+  description: string;
+}
+export interface FontSettings {
+  nameFont: string;
+  sectionFont: string;
+  bodyFont: string;
+  skillsFont: string;
+  nameSize: string;
+  sectionSize: string;
+  bodySize: string;
+  skillsSize: string;
+}
 export interface PortfolioData {
   name: string;
   title: string;
@@ -47,12 +66,14 @@ export interface PortfolioData {
   twitter?: string;
   resumeUrl?: string;
   profileImage?: string;
-  
   skills: Skill[];
   experiences: Experience[];
   projects: Project[];
   educations: Education[];
-  
-  themeId: string;   // 'slate' | 'neon' | 'editorial' | 'emerald' | 'sunset'
-  layoutId: string;  // 'bento' | 'minimal' | 'split'
+  certifications: Certification[];
+  languages: Language[];
+  volunteers: Volunteer[];
+  themeId: string;
+  layoutId: string;
+  fonts: FontSettings;
 }

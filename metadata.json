@@ -1,0 +1,6 @@
+{
+  "name": "Nestly",
+  "description": "A modern React + Tailwind CSS portfolio generator with a dark-themed form builder and clean real-time responsive preview.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

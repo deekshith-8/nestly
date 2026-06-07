@@ -5,13 +5,15 @@ import Form from "../components/Form";
 import Preview from "../components/Preview";
 import { defaultPortfolioData } from "../lib/defaultPortfolioData";
 import { PortfolioData, FontSettings } from "../types/portfolio";
-import {
-  Code, Terminal, Copy, X, Check, Monitor, Tablet, Smartphone,
-  RefreshCcw, BookOpen, Type, ChevronDown
-} from "lucide-react";
+import { Code, Terminal, Copy, X, Check, Monitor, Tablet, Smartphone, RefreshCcw, BookOpen, Type, ChevronDown } from "lucide-react";
 
 const FONTS = ["Inter", "Roboto", "Poppins", "Playfair Display", "Space Grotesk", "Fira Code", "Merriweather", "Montserrat", "Raleway", "monospace"];
-const SIZES = { name: ["2rem", "2.5rem", "3rem", "3.5rem", "4rem"], section: ["0.7rem", "0.8rem", "0.875rem", "1rem", "1.125rem"], body: ["0.65rem", "0.7rem", "0.75rem", "0.8rem", "0.875rem"], skills: ["0.6rem", "0.65rem", "0.7rem", "0.75rem", "0.8rem"] };
+const SIZES = {
+  name: ["2rem", "2.5rem", "3rem", "3.5rem", "4rem"],
+  section: ["0.7rem", "0.8rem", "0.875rem", "1rem", "1.125rem"],
+  body: ["0.65rem", "0.7rem", "0.75rem", "0.8rem", "0.875rem"],
+  skills: ["0.6rem", "0.65rem", "0.7rem", "0.75rem", "0.8rem"]
+};
 
 export default function Page() {
   const [portfolioData, setPortfolioData] = useState<PortfolioData>(defaultPortfolioData);
@@ -21,7 +23,7 @@ export default function Page() {
   const [isFontToolbarOpen, setIsFontToolbarOpen] = useState(false);
 
   const handleReset = () => {
-    if (confirm("Reset to default sample portfolio data?")) setPortfolioData(defaultPortfolioData);
+    if (confirm("Reset to default?")) setPortfolioData(defaultPortfolioData);
   };
 
   const handleCopyCode = (code: string) => {
@@ -34,221 +36,293 @@ export default function Page() {
     setPortfolioData(prev => ({ ...prev, fonts: { ...prev.fonts, [key]: value } }));
   };
 
-  const generateRawHtml = () => {
-    const themeName = portfolioData.themeId.toUpperCase();
-    const layoutName = portfolioData.layoutId.toUpperCase();
-    return `<!-- Nestly Portfolio | Theme: ${themeName} | Layout: ${layoutName} | ${new Date().toLocaleDateString()} -->
-<!DOCTYPE html>
+  const generateRawHtml = () => `<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${portfolioData.name || 'Portfolio'} - ${portfolioData.title || ''}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Montserrat:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-      .font-name { font-family: '${portfolioData.fonts.nameFont}', sans-serif; font-size: ${portfolioData.fonts.nameSize}; }
-      .font-section { font-family: '${portfolioData.fonts.sectionFont}', sans-serif; font-size: ${portfolioData.fonts.sectionSize}; }
-      .font-body { font-family: '${portfolioData.fonts.bodyFont}', sans-serif; font-size: ${portfolioData.fonts.bodySize}; }
-      .font-skills { font-family: '${portfolioData.fonts.skillsFont}', monospace; font-size: ${portfolioData.fonts.skillsSize}; }
-      body { font-family: '${portfolioData.fonts.bodyFont}', sans-serif; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${portfolioData.name || 'Portfolio'}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; color: #fff; font-family: 'Inter', sans-serif; }
+    .accent { color: #c6f135; }
+    .fn { font-size: ${portfolioData.fonts.nameSize}; font-weight: 900; line-height: 0.9; letter-spacing: -0.03em; text-transform: uppercase; }
+    .fs { font-size: ${portfolioData.fonts.sectionSize}; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+    .fb { font-size: ${portfolioData.fonts.bodySize}; color: #666; line-height: 1.7; }
+    .fsk { font-family: 'Fira Code', monospace; font-size: ${portfolioData.fonts.skillsSize}; }
+    .tag { border: 1px solid #222; color: #555; padding: 4px 10px; border-radius: 999px; font-size: 11px; }
+    .tag:hover { border-color: #c6f135; color: #c6f135; transition: all 0.2s; }
+    .dot { width: 6px; height: 6px; background: #c6f135; border-radius: 50%; display: inline-block; }
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 48px; border-bottom: 1px solid #111; }
+    .nav-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.03em; }
+    .nav-links { display: flex; gap: 32px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #444; }
+    .nav-links a:hover { color: #fff; }
+    .btn-primary { background: #c6f135; color: #000; font-weight: 700; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 20px; border: none; cursor: pointer; }
+    .btn-outline { border: 1px solid #333; color: #fff; font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; padding: 10px 20px; background: transparent; cursor: pointer; }
+    main { max-width: 1100px; margin: 0 auto; padding: 80px 48px; }
+    .hero { margin-bottom: 80px; }
+    .hero-badge { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #c6f135; margin-bottom: 24px; }
+    .hero-name { font-size: clamp(72px, 12vw, 140px); font-weight: 900; line-height: 0.88; letter-spacing: -0.04em; text-transform: uppercase; margin-bottom: 24px; }
+    .hero-name .line2 { color: #c6f135; }
+    .section-label { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #333; margin-bottom: 32px; border-bottom: 1px solid #111; padding-bottom: 12px; }
+    section { margin-bottom: 72px; }
+  </style>
 </head>
-<body class="${portfolioData.themeId === "neon" ? "bg-[#09090b]" : portfolioData.themeId === "editorial" ? "bg-[#0f0e0c]" : portfolioData.themeId === "emerald" ? "bg-[#040d0a]" : "bg-[#090d16]"} text-zinc-100 min-h-screen">
-  <main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
-    <header class="flex flex-col md:flex-row items-center gap-8 border border-zinc-800 p-6 md:p-8 rounded-2xl bg-zinc-900/40">
-      <img src="${portfolioData.profileImage || 'https://api.dicebear.com/7.x/avataaars/svg?seed=arjun'}" alt="${portfolioData.name}" class="h-28 w-28 md:h-32 md:w-32 rounded-2xl object-cover border-2 border-zinc-800">
-      <div class="space-y-3 flex-1 text-center md:text-left">
-        <span class="text-xs text-indigo-400 font-semibold uppercase tracking-wider">Available for Projects</span>
-        <h1 class="font-name font-extrabold tracking-tight text-white">${portfolioData.name || 'Your Name'}</h1>
-        <p class="font-section font-semibold text-indigo-400">${portfolioData.title || 'Your Title'}</p>
-        <p class="font-body text-zinc-400 leading-relaxed max-w-2xl">${portfolioData.bio || ''}</p>
-        <div class="flex flex-wrap gap-4 text-xs text-zinc-500 justify-center md:justify-start">
-          <span>📍 ${portfolioData.location || ''}</span>
-          <span>✉️ ${portfolioData.email || ''}</span>
-          ${portfolioData.phone ? `<span>📱 ${portfolioData.phone}</span>` : ''}
-        </div>
-      </div>
-    </header>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <section class="border border-zinc-800 p-6 rounded-2xl bg-zinc-900/20 space-y-4">
-        <h3 class="font-section font-bold text-white uppercase tracking-wider">⚡ Skills</h3>
-        <div class="flex flex-wrap gap-1.5">${portfolioData.skills.map(s => `<span class="font-skills py-1 px-2.5 bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-md">${s.name}</span>`).join('')}</div>
-      </section>
-      <section class="border border-zinc-800 p-6 rounded-2xl bg-zinc-900/20 space-y-4">
-        <h3 class="font-section font-bold text-white uppercase tracking-wider">🎓 Education</h3>
-        <div class="space-y-3">${portfolioData.educations.map(edu => `<div class="font-body"><div class="flex justify-between text-zinc-400"><span class="font-bold text-zinc-200">${edu.degree}</span><span>${edu.period}</span></div><p class="text-zinc-500">${edu.school}</p></div>`).join('')}</div>
-      </section>
+<body>
+  <nav>
+    <div class="nav-logo">N.</div>
+    <div class="nav-links">
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
     </div>
-    <section class="border border-zinc-800 p-6 rounded-2xl bg-zinc-900/20 space-y-6">
-      <h3 class="font-section font-bold text-white uppercase tracking-wider">💼 Experience</h3>
-      <div class="space-y-6 border-l border-zinc-800 pl-4 ml-2">${portfolioData.experiences.map(exp => `<div class="font-body relative space-y-1"><span class="absolute -left-6 top-1 w-3 h-3 rounded-full bg-zinc-800 border-2 border-zinc-900"></span><div class="flex justify-between text-xs"><span class="font-bold text-zinc-200">${exp.role}</span><span class="text-zinc-500">${exp.period}</span></div><p class="text-indigo-400">${exp.company}</p><p class="text-zinc-400">${exp.description}</p></div>`).join('')}</div>
+    <div style="display:flex;gap:8px;">
+      <a href="mailto:${portfolioData.email}" class="btn-primary">Hire Me</a>
+      ${portfolioData.resumeUrl ? `<a href="${portfolioData.resumeUrl}" class="btn-outline">Resume ↗</a>` : ''}
+    </div>
+  </nav>
+  <main>
+    <div class="hero">
+      <div class="hero-badge"><span class="dot"></span> Available · ${portfolioData.title} · ${portfolioData.location}</div>
+      <div class="hero-name">
+        <div>${portfolioData.name?.split(' ')[0] || 'YOUR'}</div>
+        <div class="line2">${portfolioData.name?.split(' ').slice(1).join(' ') || 'NAME'}</div>
+      </div>
+      <p class="fb" style="max-width:480px;margin-bottom:32px;">${portfolioData.bio}</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="mailto:${portfolioData.email}" class="btn-outline">Get in touch →</a>
+        ${portfolioData.github ? `<a href="${portfolioData.github}" class="btn-outline">GitHub ↗</a>` : ''}
+      </div>
+    </div>
+
+    <section id="skills">
+      <div class="section-label">Skills</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">${portfolioData.skills.map(s => `<span class="tag fsk">${s.name}</span>`).join('')}</div>
     </section>
-    <section class="space-y-4">
-      <h3 class="font-section font-bold text-white uppercase tracking-wider text-center">📂 Projects</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">${portfolioData.projects.map(proj => `<div class="border border-zinc-800 rounded-2xl bg-zinc-900/30 p-5 space-y-3"><div class="flex justify-between"><span class="text-[9px] font-mono text-zinc-500">PROJECT</span>${proj.featured ? '<span class="text-[9px] font-bold text-indigo-300 px-2 py-0.5 rounded bg-indigo-900/40">FEATURED</span>' : ''}</div><h4 class="font-section font-semibold text-white">${proj.title}</h4><p class="font-body text-zinc-400">${proj.description}</p><div class="flex flex-wrap gap-1">${proj.techTags.map(tag => `<span class="font-skills px-1.5 py-0.5 rounded bg-zinc-950/60 border border-zinc-900 text-zinc-500">${tag}</span>`).join('')}</div>${proj.link ? `<a href="${proj.link}" target="_blank" class="text-xs text-indigo-400 font-medium hover:underline">Launch ↗</a>` : ''}</div>`).join('')}</div>
+
+    <section id="experience">
+      <div class="section-label">Experience</div>
+      <div style="display:flex;flex-direction:column;gap:40px;">${portfolioData.experiences.map((exp, i) => `
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:11px;color:#333;font-family:'Fira Code',monospace;">${String(i+1).padStart(2,'0')}</span>
+              <span style="font-weight:700;font-size:16px;">${exp.role}</span>
+            </div>
+            <span style="font-size:11px;color:#333;font-family:'Fira Code',monospace;">${exp.period}</span>
+          </div>
+          <p style="font-size:12px;color:#c6f135;margin-bottom:8px;margin-left:28px;">${exp.company}</p>
+          <p class="fb" style="margin-left:28px;">${exp.description}</p>
+        </div>`).join('<div style="border-top:1px solid #111;"></div>')}</div>
     </section>
-    ${portfolioData.certifications?.length ? `<section class="border border-zinc-800 p-6 rounded-2xl bg-zinc-900/20 space-y-4"><h3 class="font-section font-bold text-white uppercase tracking-wider">🏆 Certifications</h3><div class="space-y-3">${portfolioData.certifications.map(c => `<div class="font-body flex justify-between items-center"><div><span class="font-bold text-zinc-200">${c.name}</span><p class="text-zinc-500">${c.issuer}</p></div><span class="text-zinc-500">${c.date}</span></div>`).join('')}</div></section>` : ''}
-    ${portfolioData.languages?.length ? `<section class="border border-zinc-800 p-6 rounded-2xl bg-zinc-900/20 space-y-4"><h3 class="font-section font-bold text-white uppercase tracking-wider">🌐 Languages</h3><div class="flex flex-wrap gap-2">${portfolioData.languages.map(l => `<span class="font-body px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-300">${l.name} <span class="text-zinc-500">· ${l.proficiency}</span></span>`).join('')}</div></section>` : ''}
-    ${portfolioData.volunteers?.length ? `<section class="border border-zinc-800 p-6 rounded-2xl bg-zinc-900/20 space-y-4"><h3 class="font-section font-bold text-white uppercase tracking-wider">❤️ Volunteer</h3><div class="space-y-4">${portfolioData.volunteers.map(v => `<div class="font-body space-y-1"><div class="flex justify-between"><span class="font-bold text-zinc-200">${v.role}</span><span class="text-zinc-500">${v.period}</span></div><p class="text-indigo-400">${v.organization}</p><p class="text-zinc-400">${v.description}</p></div>`).join('')}</div></section>` : ''}
+
+    <section id="projects">
+      <div class="section-label">Projects</div>
+      <div style="display:flex;flex-direction:column;gap:0;">${portfolioData.projects.map((proj, i) => `
+        <div style="padding:32px 0;border-bottom:1px solid #111;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:16px;">
+              <span style="font-size:11px;color:#222;font-family:'Fira Code',monospace;">${String(i+1).padStart(2,'0')}</span>
+              <div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <h3 style="font-size:20px;font-weight:800;letter-spacing:-0.02em;">${proj.title}</h3>
+                  ${proj.featured ? '<span style="font-size:9px;border:1px solid #333;color:#666;padding:2px 8px;font-family:monospace;text-transform:uppercase;">Featured</span>' : ''}
+                </div>
+                <p class="fb" style="margin-top:4px;">${proj.description}</p>
+              </div>
+            </div>
+            ${proj.link ? `<a href="${proj.link}" style="font-size:11px;color:#333;font-family:'Fira Code',monospace;white-space:nowrap;margin-left:24px;" onmouseover="this.style.color='#c6f135'" onmouseout="this.style.color='#333'">↗ Launch</a>` : ''}
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-left:36px;">${proj.techTags.map(t => `<span class="tag fsk">${t}</span>`).join('')}</div>
+        </div>`).join('')}</div>
+    </section>
+
+    <section id="education">
+      <div class="section-label">Education</div>
+      <div style="display:flex;flex-direction:column;gap:24px;">${portfolioData.educations.map(edu => `
+        <div style="display:flex;justify-content:space-between;align-items:baseline;">
+          <div>
+            <p style="font-weight:700;font-size:15px;">${edu.degree}</p>
+            <p style="font-size:12px;color:#444;margin-top:2px;">${edu.school}</p>
+          </div>
+          <span style="font-size:11px;color:#333;font-family:'Fira Code',monospace;">${edu.period}</span>
+        </div>`).join('<div style="border-top:1px solid #111;"></div>')}</div>
+    </section>
+
+    ${portfolioData.certifications?.length ? `<section><div class="section-label">Certifications</div><div style="display:flex;flex-direction:column;gap:16px;">${portfolioData.certifications.map(c => `<div style="display:flex;justify-content:space-between;align-items:baseline;"><div><p style="font-weight:600;font-size:14px;">${c.name}</p><p style="font-size:12px;color:#444;">${c.issuer}</p></div><span style="font-size:11px;color:#333;font-family:'Fira Code',monospace;">${c.date}</span></div>`).join('<div style="border-top:1px solid #111;"></div>')}</div></section>` : ''}
+
+    ${portfolioData.languages?.length ? `<section><div class="section-label">Languages</div><div style="display:flex;flex-wrap:wrap;gap:8px;">${portfolioData.languages.map(l => `<span class="tag">${l.name} · ${l.proficiency}</span>`).join('')}</div></section>` : ''}
   </main>
 </body>
 </html>`;
-  };
 
   const codeString = generateRawHtml();
 
   const getPreviewWidthClass = () => {
     switch (previewMode) {
-      case "mobile": return "max-w-[395px] h-[720px] rounded-3xl border-8 border-zinc-800 shadow-2xl relative mt-4";
-      case "tablet": return "max-w-[768px] h-[92%] border-4 border-zinc-800 rounded-2xl shadow-xl mt-2";
+      case "mobile": return "max-w-[390px] h-[720px] rounded-[36px] border-4 border-zinc-900 shadow-2xl overflow-hidden mt-6";
+      case "tablet": return "max-w-[768px] h-[90%] border border-zinc-900 rounded-xl shadow-xl overflow-hidden mt-2";
       default: return "w-full h-full";
     }
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-zinc-950 text-zinc-100 overflow-hidden">
-      {/* Top Header */}
-      <header className="h-14 px-6 bg-[#0c0d12]/90 backdrop-blur-xl border-b border-zinc-850/60 flex items-center justify-between z-10 select-none relative">
-        <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/10 to-transparent pointer-events-none" />
-        <div className="flex items-center gap-3 group">
-          <div className="relative flex items-center justify-center w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-lg">
-            <div className="absolute inset-0.5 rounded-[10px] bg-[#0c0d12]/92 flex items-center justify-center">
-              <svg className="w-4 h-4 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 3l8 4.5v9L12 21L4 16.5v-9L12 3z" />
-                <circle cx="12" cy="12" r="2" className="fill-indigo-400 stroke-none" />
-              </svg>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <h2 className="text-base font-extrabold tracking-tight text-white">
-              <span className="bg-gradient-to-r from-white via-zinc-100 to-zinc-300 bg-clip-text text-transparent">Nestly</span>
-            </h2>
-            <span className="text-[9px] font-mono font-semibold tracking-wider bg-indigo-550/10 text-indigo-300 border border-indigo-500/10 py-0.5 px-2 rounded-full">v2.0</span>
-          </div>
+    <div className="flex flex-col h-screen w-screen overflow-hidden" style={{ background: '#000', color: '#fff', fontFamily: "'Inter', sans-serif" }}>
+
+      {/* NAV */}
+      <nav style={{ borderBottom: '1px solid #111', background: '#000', height: '48px' }} className="px-6 flex items-center justify-between shrink-0 z-20">
+        <div className="flex items-center gap-3">
+          <span style={{ fontSize: '16px', fontWeight: 900, letterSpacing: '-0.03em', color: '#fff' }}>N.</span>
+          <span style={{ fontSize: '9px', color: '#333', letterSpacing: '0.15em', fontFamily: 'monospace' }}>PORTFOLIO BUILDER</span>
         </div>
 
-        {/* Center preview mode */}
-        <div className="flex items-center gap-1 bg-zinc-950 border border-zinc-850/80 p-1 rounded-xl text-zinc-400 shadow-inner">
+        {/* Preview toggle */}
+        <div style={{ background: '#0a0a0a', border: '1px solid #111' }} className="flex items-center rounded-lg p-0.5 gap-0.5">
           {[{ mode: "desktop", Icon: Monitor }, { mode: "tablet", Icon: Tablet }, { mode: "mobile", Icon: Smartphone }].map(({ mode, Icon }) => (
             <button key={mode} type="button" onClick={() => setPreviewMode(mode as any)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${previewMode === mode ? "bg-zinc-900 text-indigo-400 border border-zinc-800 shadow-sm" : "hover:text-zinc-200 border border-transparent"}`}>
-              <Icon className="h-3.5 w-3.5" />
-              <span className="capitalize">{mode}</span>
+              style={previewMode === mode
+                ? { background: '#c6f135', color: '#000' }
+                : { color: '#333' }}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold transition-all cursor-pointer capitalize hover:text-white">
+              <Icon className="h-3 w-3" />
+              <span>{mode}</span>
             </button>
           ))}
         </div>
 
-        {/* Actions */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
           <button type="button" onClick={handleReset}
-            className="px-2.5 py-1.5 border border-zinc-800 bg-zinc-950/65 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 transition-all text-xs font-medium flex items-center gap-1.5 cursor-pointer">
-            <RefreshCcw className="h-3.5 w-3.5 text-zinc-500" />
-            <span className="hidden sm:inline text-[11px]">Clear Canvas</span>
+            style={{ color: '#333', fontSize: '11px', letterSpacing: '0.08em' }}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold uppercase transition-all cursor-pointer hover:text-white">
+            <RefreshCcw className="h-3 w-3" />
+            <span>Reset</span>
           </button>
           <button type="button" onClick={() => setIsExportModalOpen(true)}
-            className="px-3.5 py-1.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 font-semibold text-white rounded-lg transition-all text-xs flex items-center gap-2 shadow-lg cursor-pointer">
-            <Code className="h-4 w-4 text-indigo-100" />
-            <span>Assemble Code</span>
+            style={{ background: '#c6f135', color: '#000', fontSize: '11px', fontWeight: 700, letterSpacing: '0.08em' }}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase transition-all cursor-pointer hover:opacity-90">
+            <Code className="h-3 w-3" />
+            <span>Export</span>
           </button>
         </div>
-      </header>
+      </nav>
 
-      {/* Main layout */}
-      <main className="flex-1 flex flex-col md:flex-row overflow-hidden relative">
-        <div className="w-full md:w-[385px] lg:w-[415px] xl:w-[440px] shrink-0 h-full">
+      {/* SPLIT */}
+      <div className="flex-1 flex overflow-hidden">
+
+        {/* LEFT — Form */}
+        <div style={{ width: '340px', borderRight: '1px solid #111', background: '#000', overflowY: 'auto' }} className="shrink-0 h-full">
           <Form data={portfolioData} onChange={setPortfolioData} />
         </div>
 
-        <div className="flex-1 bg-zinc-950 flex items-center justify-center p-4 overflow-hidden relative">
-          {/* Status label */}
-          <div className="absolute top-2 left-4 text-[10px] font-mono text-zinc-600 flex items-center gap-1.5 select-none z-10 pointer-events-none">
-            <span className="w-2 h-2 rounded-full bg-indigo-600 inline-block animate-pulse" />
-            <span>CANVAS: {portfolioData.themeId.toUpperCase()} / {portfolioData.layoutId.toUpperCase()}</span>
-          </div>
+        {/* RIGHT — Preview */}
+        <div style={{ background: '#050505' }} className="flex-1 flex flex-col overflow-hidden">
 
-          {/* Font Toolbar */}
-          <div className="absolute top-2 right-4 z-20">
-            <button type="button" onClick={() => setIsFontToolbarOpen(!isFontToolbarOpen)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:border-indigo-500/50 rounded-lg text-zinc-300 hover:text-white text-xs font-medium transition-all cursor-pointer">
-              <Type className="h-3.5 w-3.5 text-indigo-400" />
-              <span>Fonts</span>
-              <ChevronDown className={`h-3 w-3 transition-transform ${isFontToolbarOpen ? "rotate-180" : ""}`} />
-            </button>
+          {/* Preview bar */}
+          <div style={{ borderBottom: '1px solid #111', background: '#000', height: '36px' }} className="px-4 flex items-center justify-between shrink-0">
+            <div className="flex items-center gap-2">
+              <span style={{ background: '#c6f135', width: '6px', height: '6px', borderRadius: '50%', display: 'inline-block' }} className="animate-pulse" />
+              <span style={{ color: '#222', fontFamily: 'monospace', fontSize: '10px', letterSpacing: '0.1em' }}>
+                {portfolioData.themeId.toUpperCase()} · {portfolioData.layoutId.toUpperCase()}
+              </span>
+            </div>
 
-            {isFontToolbarOpen && (
-              <div className="absolute right-0 top-10 w-80 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl p-4 space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-white tracking-wide">Typography Settings</span>
-                  <button type="button" onClick={() => setIsFontToolbarOpen(false)} className="text-zinc-500 hover:text-white">
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
+            {/* Font toolbar */}
+            <div className="relative">
+              <button type="button" onClick={() => setIsFontToolbarOpen(!isFontToolbarOpen)}
+                style={isFontToolbarOpen
+                  ? { background: '#c6f135', color: '#000' }
+                  : { color: '#333', border: '1px solid #111' }}
+                className="flex items-center gap-1.5 px-2 py-1 text-xs font-bold uppercase transition-all cursor-pointer hover:text-white">
+                <Type className="h-3 w-3" />
+                <span>Type</span>
+                <ChevronDown className={`h-2.5 w-2.5 transition-transform ${isFontToolbarOpen ? "rotate-180" : ""}`} />
+              </button>
 
-                {([
-                  { label: "Name Font", fontKey: "nameFont", sizeKey: "nameSize", sizes: SIZES.name },
-                  { label: "Section Titles", fontKey: "sectionFont", sizeKey: "sectionSize", sizes: SIZES.section },
-                  { label: "Body Text", fontKey: "bodyFont", sizeKey: "bodySize", sizes: SIZES.body },
-                  { label: "Skills Tags", fontKey: "skillsFont", sizeKey: "skillsSize", sizes: SIZES.skills },
-                ] as { label: string; fontKey: keyof FontSettings; sizeKey: keyof FontSettings; sizes: string[] }[]).map(({ label, fontKey, sizeKey, sizes }) => (
-                  <div key={fontKey} className="space-y-1.5">
-                    <label className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider block">{label}</label>
-                    <div className="flex gap-2">
-                      <select value={portfolioData.fonts[fontKey]} onChange={(e) => updateFont(fontKey, e.target.value)}
-                        className="flex-1 bg-zinc-950 border border-zinc-800 text-zinc-200 text-xs rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                        {FONTS.map(f => <option key={f} value={f}>{f}</option>)}
-                      </select>
-                      <select value={portfolioData.fonts[sizeKey]} onChange={(e) => updateFont(sizeKey, e.target.value)}
-                        className="w-24 bg-zinc-950 border border-zinc-800 text-zinc-200 text-xs rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                        {sizes.map(s => <option key={s} value={s}>{s}</option>)}
-                      </select>
-                    </div>
-                    <p className="text-[11px] text-zinc-500 truncate" style={{ fontFamily: portfolioData.fonts[fontKey], fontSize: "12px" }}>
-                      Preview: {label}
-                    </p>
+              {isFontToolbarOpen && (
+                <div style={{ background: '#000', border: '1px solid #1a1a1a', boxShadow: '0 25px 60px rgba(0,0,0,0.9)' }}
+                  className="absolute right-0 top-8 w-72 p-4 space-y-4 z-30">
+                  <div className="flex items-center justify-between">
+                    <span style={{ color: '#fff', fontWeight: 700, fontSize: '11px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Typography</span>
+                    <button type="button" onClick={() => setIsFontToolbarOpen(false)} style={{ color: '#333' }} className="hover:text-white transition-colors">
+                      <X className="h-3.5 w-3.5" />
+                    </button>
                   </div>
-                ))}
-              </div>
-            )}
+                  {([
+                    { label: "Name", fontKey: "nameFont", sizeKey: "nameSize", sizes: SIZES.name },
+                    { label: "Sections", fontKey: "sectionFont", sizeKey: "sectionSize", sizes: SIZES.section },
+                    { label: "Body", fontKey: "bodyFont", sizeKey: "bodySize", sizes: SIZES.body },
+                    { label: "Skills", fontKey: "skillsFont", sizeKey: "skillsSize", sizes: SIZES.skills },
+                  ] as { label: string; fontKey: keyof FontSettings; sizeKey: keyof FontSettings; sizes: string[] }[]).map(({ label, fontKey, sizeKey, sizes }) => (
+                    <div key={fontKey} className="space-y-1.5">
+                      <span style={{ color: '#333', fontSize: '9px', letterSpacing: '0.15em', fontFamily: 'monospace', textTransform: 'uppercase' }} className="block">{label}</span>
+                      <div className="flex gap-1.5">
+                        <select value={portfolioData.fonts[fontKey]} onChange={(e) => updateFont(fontKey, e.target.value)}
+                          style={{ background: '#0a0a0a', border: '1px solid #1a1a1a', color: '#888', fontSize: '11px' }}
+                          className="flex-1 rounded px-2 py-1.5 focus:outline-none focus:border-yellow-400">
+                          {FONTS.map(f => <option key={f} value={f} style={{ background: '#000' }}>{f}</option>)}
+                        </select>
+                        <select value={portfolioData.fonts[sizeKey]} onChange={(e) => updateFont(sizeKey, e.target.value)}
+                          style={{ background: '#0a0a0a', border: '1px solid #1a1a1a', color: '#888', fontSize: '11px' }}
+                          className="w-16 rounded px-2 py-1.5 focus:outline-none focus:border-yellow-400">
+                          {sizes.map(s => <option key={s} value={s} style={{ background: '#000' }}>{s}</option>)}
+                        </select>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className={`transition-all duration-300 ease-out flex items-center justify-center w-full h-full ${previewMode !== "desktop" ? "bg-zinc-900/40 p-12 border border-zinc-900/40 rounded-3xl" : ""}`}>
+          {/* Canvas */}
+          <div className={`flex-1 flex items-center justify-center overflow-hidden ${previewMode !== "desktop" ? "p-8" : ""}`}
+            style={{ background: previewMode !== "desktop" ? '#000' : '#050505' }}>
             <div className={`transition-all duration-300 ease-out ${getPreviewWidthClass()}`}>
               <Preview data={portfolioData} />
             </div>
           </div>
         </div>
-      </main>
+      </div>
 
-      {/* Export Modal */}
+      {/* EXPORT MODAL */}
       {isExportModalOpen && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-4">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl w-full max-w-2xl max-h-[82vh] flex flex-col overflow-hidden">
-            <div className="px-6 py-4 border-b border-zinc-800/80 flex items-center justify-between bg-zinc-950">
-              <div className="flex items-center gap-2.5">
-                <span className="p-1.5 bg-indigo-500/15 rounded-lg text-indigo-400"><Terminal className="h-4 w-4" /></span>
+        <div style={{ background: 'rgba(0,0,0,0.95)', backdropFilter: 'blur(4px)' }} className="fixed inset-0 flex items-center justify-center z-50 p-4">
+          <div style={{ background: '#000', border: '1px solid #1a1a1a', boxShadow: '0 40px 80px rgba(0,0,0,0.9)' }} className="rounded w-full max-w-2xl max-h-[80vh] flex flex-col overflow-hidden">
+            <div style={{ borderBottom: '1px solid #111' }} className="px-5 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Terminal style={{ color: '#c6f135' }} className="h-4 w-4" />
                 <div>
-                  <h3 className="text-sm font-bold text-white">Your Standalone Portfolio</h3>
-                  <p className="text-[10px] text-zinc-500 mt-0.5">Complete HTML with your fonts, theme and content.</p>
+                  <h3 style={{ color: '#fff', fontWeight: 700, fontSize: '13px', letterSpacing: '-0.01em' }}>Export Portfolio</h3>
+                  <p style={{ color: '#333', fontSize: '11px', fontFamily: 'monospace' }}>Standalone HTML · Deploy anywhere</p>
                 </div>
               </div>
-              <button type="button" onClick={() => setIsExportModalOpen(false)} className="p-1.5 rounded-lg text-zinc-500 hover:text-white cursor-pointer"><X className="h-4 w-4" /></button>
+              <button type="button" onClick={() => setIsExportModalOpen(false)} style={{ color: '#333' }} className="hover:text-white transition-colors cursor-pointer">
+                <X className="h-4 w-4" />
+              </button>
             </div>
-            <div className="flex-1 overflow-y-auto p-5 space-y-4">
-              <div className="flex items-center justify-between text-xs text-zinc-400">
-                <span className="font-mono text-[11px] bg-zinc-950 px-2 py-1 rounded border border-zinc-800">output.html</span>
+            <div className="flex-1 overflow-y-auto p-5 space-y-3">
+              <div className="flex items-center justify-between">
+                <span style={{ color: '#333', fontFamily: 'monospace', fontSize: '11px' }}>output.html</span>
                 <button type="button" onClick={() => handleCopyCode(codeString)}
-                  className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-white font-semibold flex items-center gap-1.5 cursor-pointer">
-                  {isCopied ? <><Check className="h-3.5 w-3.5" /><span>Copied!</span></> : <><Copy className="h-3.5 w-3.5" /><span>Copy HTML</span></>}
+                  style={{ background: '#c6f135', color: '#000', fontWeight: 700, fontSize: '11px' }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-xs uppercase cursor-pointer hover:opacity-90 transition-all">
+                  {isCopied ? <><Check className="h-3 w-3" /><span>Copied!</span></> : <><Copy className="h-3 w-3" /><span>Copy HTML</span></>}
                 </button>
               </div>
-              <div className="bg-zinc-950 rounded-xl p-4 border border-zinc-800 overflow-x-auto">
-                <pre className="text-xs text-zinc-300 font-mono leading-relaxed select-all"><code>{codeString}</code></pre>
+              <div style={{ background: '#050505', border: '1px solid #111' }} className="rounded p-4 overflow-x-auto">
+                <pre style={{ color: '#333', fontFamily: 'monospace', fontSize: '11px', lineHeight: '1.6' }} className="select-all"><code>{codeString}</code></pre>
               </div>
             </div>
-            <div className="px-6 py-4 bg-zinc-950 border-t border-zinc-800 text-[11px] text-zinc-500 flex items-center justify-between">
-              <div className="flex items-center gap-1"><BookOpen className="h-3.5 w-3.5 text-zinc-600" /><span>Fonts loaded via Google Fonts CDN</span></div>
-              <span className="text-zinc-600">Nestly Engine Output</span>
+            <div style={{ borderTop: '1px solid #111' }} className="px-5 py-3 flex items-center justify-between">
+              <div className="flex items-center gap-1.5" style={{ color: '#222', fontSize: '11px', fontFamily: 'monospace' }}>
+                <BookOpen className="h-3 w-3" />
+                <span>Fonts via Google Fonts CDN</span>
+              </div>
+              <span style={{ color: '#1a1a1a', fontFamily: 'monospace', fontSize: '10px' }}>NESTLY ENGINE</span>
             </div>
           </div>
         </div>

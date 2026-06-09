@@ -1,61 +1,76 @@
 <div align="center">
-  <h1>🗂️ Nestly</h1>
-  <p>Design & deploy stunning developer portfolios in minutes</p>
+  <h1>Nestly</h1>
+  <p>Open-source portfolio generator for developers. Build, customize, and export your portfolio in minutes.</p>
 
   <img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" />
   <img src="https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat-square&logo=tailwindcss" />
   <img src="https://img.shields.io/badge/Gemini-AI-4285F4?style=flat-square&logo=google" />
   <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" />
+  <img src="https://img.shields.io/github/stars/deekshith-8/nestly?style=flat-square&color=yellow" />
 </div>
 
 ---
 
-## ✨ Features
+## Overview
 
-- 🎨 Multiple themes — Slate, Neon, Ivory, Emerald, Sunset
-- 📐 Multiple layouts — Bento Grid, Minimal Stack, Split Drawer
-- ⚡ Live preview as you type
-- 🤖 AI-powered bio generation with Gemini
-- 📦 Export a standalone HTML file — deploy anywhere
-- 📱 Desktop, Tablet & Mobile preview modes
+Nestly is a free, open-source portfolio builder designed for developers and CS students. Fill in your details, pick a theme, preview live, and export a standalone HTML file ready to deploy anywhere — no backend required.
 
-## 🚀 Getting Started
+## Features
 
-**Prerequisites:** Node.js
+- **5 Themes** — Slate, Neon, Ivory, Emerald, Sunset
+- **3 Layouts** — Bento Grid, Minimal Stack, Split Drawer
+- **Live Preview** — See changes in real time as you type
+- **AI Bio Generator** — Powered by Gemini AI
+- **Typography Controls** — Per-section font and size customization
+- **Resume Sections** — Skills, Experience, Projects, Education, Certifications, Languages, Volunteer Work
+- **One-click Export** — Standalone HTML with Google Fonts, ready to host on GitHub Pages or Vercel
+- **Responsive Preview** — Desktop, Tablet and Mobile modes
 
-1. Clone the repo
+## Getting Started
+
+**Prerequisites:** Node.js 18+
+
 ```bash
-   git clone https://github.com/deekshith-8/nestly.git
-   cd nestly
+git clone https://github.com/deekshith-8/nestly.git
+cd nestly
+npm install
 ```
 
-2. Install dependencies
-```bash
-   npm install
+Create a `.env.local` file:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+APP_URL=http://localhost:3000
 ```
 
-3. Add your Gemini API key to `.env.local`
+Run the development server:
 
-4. Run the app
 ```bash
-   npm run dev
+npm run dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000)
 
-## 🛠️ Built With
+## Tech Stack
 
-- [Next.js 15](https://nextjs.org)
-- [Tailwind CSS 4](https://tailwindcss.com)
-- [Gemini AI](https://ai.google.dev)
-- [Lucide Icons](https://lucide.dev)
+| Technology | Purpose |
+|-----------|---------|
+| Next.js 15 | Framework |
+| Tailwind CSS 4 | Styling |
+| Gemini AI | Bio generation |
+| Lucide React | Icons |
+| Framer Motion | Animations |
 
-## 📄 License
+## Contributing
 
-MIT — free to use and modify.
+Contributions are welcome. Please open an issue first to discuss what you'd like to change.
+
+## License
+
+MIT — free to use, modify and distribute.
 
 ---
 
 <div align="center">
-  Made with ❤️ by <a href="https://github.com/deekshith-8">deekshith-8</a>
+  <p>Built by <a href="https://github.com/deekshith-8">deekshith-8</a></p>
 </div>

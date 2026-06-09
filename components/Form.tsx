@@ -104,7 +104,7 @@ export default function Form({ data, onChange }: FormProps) {
   );
 
   const SectionWrapper = ({ id, children }: { id: string; children: React.ReactNode }) => (
-    <div className="border border-zinc-850/60 rounded-xl bg-[#0d0d12]/50 hover:border-zinc-800 transition-all duration-300 overflow-hidden shadow-sm">
+    <div className="border border-zinc-900 rounded-xl bg-[#0a0a0f] hover:border-zinc-800 transition-all overflow-hidden">
       {children}
       {activeSection === id && <div className="p-4 border-t border-zinc-850/60 space-y-4 bg-[#08080c]/60 text-xs">{/* content injected below */}</div>}
     </div>
@@ -133,7 +133,7 @@ export default function Form({ data, onChange }: FormProps) {
       <div className="p-4 space-y-3">
 
         {/* THEME */}
-        <div className="border border-zinc-850/60 rounded-xl bg-[#0d0d12]/50 hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
+        <div className="border border-zinc-900/40 rounded-xl bg-transparent hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
           <SectionHeader id="theme" icon={Palette} label="Theme & Layout Design" />
           {activeSection === "theme" && (
             <div className="p-4 border-t border-zinc-850/60 space-y-5 bg-[#08080c]/60 text-xs">
@@ -171,7 +171,7 @@ export default function Form({ data, onChange }: FormProps) {
         </div>
 
         {/* PERSONAL INFO */}
-        <div className="border border-zinc-850/60 rounded-xl bg-[#0d0d12]/50 hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
+        <div className="border border-zinc-900/40 rounded-xl bg-transparent hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
           <SectionHeader id="personal" icon={User} label="Personal Information" />
           {activeSection === "personal" && (
             <div className="p-4 border-t border-zinc-850/60 space-y-4 bg-[#08080c]/60 text-xs">
@@ -239,7 +239,7 @@ export default function Form({ data, onChange }: FormProps) {
         </div>
 
         {/* SKILLS */}
-        <div className="border border-zinc-850/60 rounded-xl bg-[#0d0d12]/50 hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
+        <div className="border border-zinc-900/40 rounded-xl bg-transparent hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
           <SectionHeader id="skills" icon={Sparkles} label="Skills Inventory" />
           {activeSection === "skills" && (
             <div className="p-4 border-t border-zinc-850/60 space-y-4 bg-[#08080c]/60 text-xs">
@@ -281,7 +281,7 @@ export default function Form({ data, onChange }: FormProps) {
         </div>
 
         {/* EXPERIENCE */}
-        <div className="border border-zinc-850/60 rounded-xl bg-[#0d0d12]/50 hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
+        <div className="border border-zinc-900/40 rounded-xl bg-transparent hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
           <SectionHeader id="experience" icon={Briefcase} label="Professional Experience" />
           {activeSection === "experience" && (
             <div className="p-4 border-t border-zinc-850/60 space-y-4 bg-[#08080c]/60 text-xs">
@@ -312,7 +312,7 @@ export default function Form({ data, onChange }: FormProps) {
         </div>
 
         {/* PROJECTS */}
-        <div className="border border-zinc-850/60 rounded-xl bg-[#0d0d12]/50 hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
+        <div className="border border-zinc-900/40 rounded-xl bg-transparent hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
           <SectionHeader id="projects" icon={FolderGit2} label="Projects Showcase" />
           {activeSection === "projects" && (
             <div className="p-4 border-t border-zinc-850/60 space-y-4 bg-[#08080c]/60 text-xs">
@@ -350,7 +350,7 @@ export default function Form({ data, onChange }: FormProps) {
         </div>
 
         {/* EDUCATION */}
-        <div className="border border-zinc-850/60 rounded-xl bg-[#0d0d12]/50 hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
+        <div className="border border-zinc-900/40 rounded-xl bg-transparent hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
           <SectionHeader id="education" icon={GraduationCap} label="Academic Studies" />
           {activeSection === "education" && (
             <div className="p-4 border-t border-zinc-850/60 space-y-4 bg-[#08080c]/60 text-xs">
@@ -380,7 +380,7 @@ export default function Form({ data, onChange }: FormProps) {
         </div>
 
         {/* CERTIFICATIONS */}
-        <div className="border border-zinc-850/60 rounded-xl bg-[#0d0d12]/50 hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
+        <div className="border border-zinc-900/40 rounded-xl bg-transparent hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
           <SectionHeader id="certifications" icon={Award} label="Certifications" />
           {activeSection === "certifications" && (
             <div className="p-4 border-t border-zinc-850/60 space-y-4 bg-[#08080c]/60 text-xs">
@@ -413,7 +413,7 @@ export default function Form({ data, onChange }: FormProps) {
         </div>
 
         {/* LANGUAGES */}
-        <div className="border border-zinc-850/60 rounded-xl bg-[#0d0d12]/50 hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
+        <div className="border border-zinc-900/40 rounded-xl bg-transparent hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
           <SectionHeader id="languages" icon={Languages} label="Languages" />
           {activeSection === "languages" && (
             <div className="p-4 border-t border-zinc-850/60 space-y-4 bg-[#08080c]/60 text-xs">
@@ -446,7 +446,7 @@ export default function Form({ data, onChange }: FormProps) {
         </div>
 
         {/* VOLUNTEER */}
-        <div className="border border-zinc-850/60 rounded-xl bg-[#0d0d12]/50 hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
+        <div className="border border-zinc-900/40 rounded-xl bg-transparent hover:border-zinc-800 transition-all overflow-hidden shadow-sm">
           <SectionHeader id="volunteer" icon={Heart} label="Volunteer Work" />
           {activeSection === "volunteer" && (
             <div className="p-4 border-t border-zinc-850/60 space-y-4 bg-[#08080c]/60 text-xs">

@@ -5,7 +5,7 @@ import Form from "../components/Form";
 import Preview from "../components/Preview";
 import { defaultPortfolioData } from "../lib/defaultPortfolioData";
 import { PortfolioData, FontSettings } from "../types/portfolio";
-import { Code, Terminal, Copy, X, Check, Monitor, Tablet, Smartphone, RefreshCcw, BookOpen, Type, ChevronDown } from "lucide-react";
+import { Code, Terminal, Copy, X, Check, RefreshCcw, BookOpen, Type, ChevronDown } from "lucide-react";
 
 const FONTS = ["Inter", "Roboto", "Poppins", "Playfair Display", "Space Grotesk", "Fira Code", "Merriweather", "Montserrat", "Raleway", "monospace"];
 const SIZES = {
@@ -17,7 +17,6 @@ const SIZES = {
 
 export default function Page() {
   const [portfolioData, setPortfolioData] = useState<PortfolioData>(defaultPortfolioData);
-  const [previewMode, setPreviewMode] = useState<"desktop" | "tablet" | "mobile">("desktop");
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isFontToolbarOpen, setIsFontToolbarOpen] = useState(false);
@@ -156,19 +155,13 @@ export default function Page() {
     ${portfolioData.certifications?.length ? `<section><div class="section-label">Certifications</div><div style="display:flex;flex-direction:column;gap:16px;">${portfolioData.certifications.map(c => `<div style="display:flex;justify-content:space-between;align-items:baseline;"><div><p style="font-weight:600;font-size:14px;">${c.name}</p><p style="font-size:12px;color:#444;">${c.issuer}</p></div><span style="font-size:11px;color:#333;font-family:'Fira Code',monospace;">${c.date}</span></div>`).join('<div style="border-top:1px solid #111;"></div>')}</div></section>` : ''}
 
     ${portfolioData.languages?.length ? `<section><div class="section-label">Languages</div><div style="display:flex;flex-wrap:wrap;gap:8px;">${portfolioData.languages.map(l => `<span class="tag">${l.name} · ${l.proficiency}</span>`).join('')}</div></section>` : ''}
+
+    ${portfolioData.volunteers?.length ? `<section><div class="section-label">Volunteer</div><div style="display:flex;flex-direction:column;gap:24px;">${portfolioData.volunteers.map(v => `<div><div style="display:flex;justify-content:space-between;align-items:baseline;"><span style="font-weight:700;font-size:15px;">${v.role}</span><span style="font-size:11px;color:#333;font-family:'Fira Code',monospace;">${v.period}</span></div><p style="font-size:12px;color:#c6f135;margin:4px 0;">${v.organization}</p><p class="fb">${v.description}</p></div>`).join('<div style="border-top:1px solid #111;"></div>')}</div></section>` : ''}
   </main>
 </body>
 </html>`;
 
   const codeString = generateRawHtml();
-
-  const getPreviewWidthClass = () => {
-    switch (previewMode) {
-      case "mobile": return "max-w-[390px] h-[720px] rounded-[36px] border-4 border-zinc-900 shadow-2xl overflow-hidden mt-6";
-      case "tablet": return "max-w-[768px] h-[90%] border border-zinc-900 rounded-xl shadow-xl overflow-hidden mt-2";
-      default: return "w-full h-full";
-    }
-  };
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden" style={{ background: '#000', color: '#fff', fontFamily: "'Inter', sans-serif" }}>
@@ -177,21 +170,6 @@ export default function Page() {
       <nav style={{ borderBottom: '1px solid #111', background: '#000', height: '48px' }} className="px-6 flex items-center justify-between shrink-0 z-20">
         <div className="flex items-center gap-3">
           <span style={{ fontSize: '16px', fontWeight: 900, letterSpacing: '-0.03em', color: '#fff' }}>N.</span>
-          <span style={{ fontSize: '9px', color: '#333', letterSpacing: '0.15em', fontFamily: 'monospace' }}>PORTFOLIO BUILDER</span>
-        </div>
-
-        {/* Preview toggle */}
-        <div style={{ background: '#0a0a0a', border: '1px solid #111' }} className="flex items-center rounded-lg p-0.5 gap-0.5">
-          {[{ mode: "desktop", Icon: Monitor }, { mode: "tablet", Icon: Tablet }, { mode: "mobile", Icon: Smartphone }].map(({ mode, Icon }) => (
-            <button key={mode} type="button" onClick={() => setPreviewMode(mode as any)}
-              style={previewMode === mode
-                ? { background: '#c6f135', color: '#000' }
-                : { color: '#333' }}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-bold transition-all cursor-pointer capitalize hover:text-white">
-              <Icon className="h-3 w-3" />
-              <span>{mode}</span>
-            </button>
-          ))}
         </div>
 
         <div className="flex items-center gap-2">
@@ -279,9 +257,8 @@ export default function Page() {
           </div>
 
           {/* Canvas */}
-          <div className={`flex-1 flex items-center justify-center overflow-hidden ${previewMode !== "desktop" ? "p-8" : ""}`}
-            style={{ background: previewMode !== "desktop" ? '#000' : '#050505' }}>
-            <div className={`transition-all duration-300 ease-out ${getPreviewWidthClass()}`}>
+          <div className="flex-1 flex items-center justify-center overflow-hidden" style={{ background: '#050505' }}>
+            <div className="w-full h-full">
               <Preview data={portfolioData} />
             </div>
           </div>

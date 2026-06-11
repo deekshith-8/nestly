@@ -125,15 +125,6 @@ export default function Form({ data, onChange }: FormProps) {
   return (
     <div className="flex flex-col h-full overflow-y-auto select-none" style={{ background: '#000', color: '#fff' }}>
 
-      {/* Header */}
-      <div className="px-5 py-4" style={{ borderBottom: '1px solid #111' }}>
-        <div className="flex items-center gap-2.5">
-          <span style={{ fontSize: '18px', fontWeight: 900, letterSpacing: '-0.04em', color: '#fff' }}>N.</span>
-          <div style={{ width: '1px', height: '14px', background: '#1a1a1a' }} />
-          <span style={{ color: '#333', fontSize: '9px', letterSpacing: '0.15em', fontFamily: 'monospace', textTransform: 'uppercase' }}>Portfolio Builder</span>
-        </div>
-      </div>
-
       {/* THEME */}
       <div style={{ borderBottom: '1px solid #111' }}>
         <Hdr id="theme" icon={Palette} label="Theme & Layout" />
@@ -143,11 +134,11 @@ export default function Form({ data, onChange }: FormProps) {
               <Label text="Color Palette" />
               <div className="grid grid-cols-5 gap-1.5">
                 {[
-                  { id: "slate", label: "Slate", bg: "#0f172a", accent: "#6366f1" },
-                  { id: "neon", label: "Neon", bg: "#09090b", accent: "#10b981" },
-                  { id: "editorial", label: "Ivory", bg: "#1c1917", accent: "#d4a574" },
-                  { id: "emerald", label: "Emerald", bg: "#022c22", accent: "#059669" },
-                  { id: "sunset", label: "Sunset", bg: "#09090b", accent: "#f43f5e" },
+                  { id: "slate", label: "Slate", bg: "#0f172a" },
+                  { id: "neon", label: "Neon", bg: "#09090b" },
+                  { id: "editorial", label: "Ivory", bg: "#1c1917" },
+                  { id: "emerald", label: "Emerald", bg: "#022c22" },
+                  { id: "sunset", label: "Sunset", bg: "#09090b" },
                 ].map(t => (
                   <button key={t.id} type="button" onClick={() => set("themeId", t.id)}
                     className="h-10 flex items-center justify-center relative transition-all cursor-pointer"

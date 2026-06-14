@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Nestly</h1>
-  <p>Open-source portfolio generator for developers. Build, customize, and export your portfolio in minutes.</p>
+  <p>Open-source portfolio generator for developers. Build, customize, and export in minutes.</p>
 
   <img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" />
   <img src="https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat-square&logo=tailwindcss" />
@@ -15,6 +15,8 @@
 
 Nestly is a free, open-source portfolio builder designed for developers and CS students. Fill in your details, pick a theme, preview live, and export a standalone HTML file ready to deploy anywhere — no backend required.
 
+---
+
 ## Features
 
 - **5 Themes** — Slate, Neon, Ivory, Emerald, Sunset
@@ -25,6 +27,20 @@ Nestly is a free, open-source portfolio builder designed for developers and CS s
 - **Resume Sections** — Skills, Experience, Projects, Education, Certifications, Languages, Volunteer Work
 - **One-click Export** — Standalone HTML with Google Fonts, ready to host on GitHub Pages or Vercel
 - **Responsive Preview** — Desktop, Tablet and Mobile modes
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| Next.js 15 | Framework |
+| Tailwind CSS 4 | Styling |
+| Gemini AI | Bio generation |
+| Lucide React | Icons |
+| Framer Motion | Animations |
+
+---
 
 ## Getting Started
 
@@ -51,19 +67,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
-## Tech Stack
-
-| Technology | Purpose |
-|-----------|---------|
-| Next.js 15 | Framework |
-| Tailwind CSS 4 | Styling |
-| Gemini AI | Bio generation |
-| Lucide React | Icons |
-| Framer Motion | Animations |
+---
 
 ## Contributing
 
 Contributions are welcome. Please open an issue first to discuss what you'd like to change.
+
+---
 
 ## License
 
@@ -72,5 +82,5 @@ MIT — free to use, modify and distribute.
 ---
 
 <div align="center">
-  <p>Built by <a href="https://github.com/deekshith-8">deekshith-8</a></p>
+  <p>Built by <a href="https://linkedin.com/in/deekshithg1206">Deekshith Gowda</a> &nbsp;·&nbsp; <a href="https://github.com/deekshith-8">GitHub</a></p>
 </div>
